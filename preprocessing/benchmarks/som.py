@@ -2,7 +2,6 @@ import pandas as pd
 import simpsom as sps
 from _benchmark_abc import BenchmarkABC
 from sklearn_som.som import SOM
-from cupy_backends.cuda.libs import cublas as _cublas
 
 
 class SOMBenchmark(BenchmarkABC):
@@ -28,4 +27,3 @@ if __name__ == '__main__':
     spaceship_x.dropna(inplace=True)
     spaceship_y = spaceship.iloc[:, -1]
     benchmark.evaluate(spaceship_x)
-
