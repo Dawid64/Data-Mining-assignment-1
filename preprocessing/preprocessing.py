@@ -24,7 +24,9 @@ class PreprocessingABC(ABC):
 
 
 class Preproccessing(PreprocessingABC):
-    def __init__(self, dataset: pd.DataFrame = None, path: str = None, target: str = None, selector: Selector = None, extractor: Extractor = None) -> None:
+
+    def __init__(self, dataset: pd.DataFrame = None, path: str = None, target: str = None,
+                 selector: Selector = None, extractor: Extractor = None, one_hot_threshold: float = 0.1) -> None:
         if path is not None:
             self.dataset = self._load_dataset(path)
         elif dataset is not None:
@@ -35,6 +37,7 @@ class Preproccessing(PreprocessingABC):
         self.target = target
         self.selector = Selector() if selector is None else selector
         self.extractor = Extractor() if extractor is None else extractor
+        self.one_hot_threshold = one_hot_threshold * self.dataset.shape[0]
         self._prepare_dataset()
 
     def preprocess(self, dataset: pd.DataFrame) -> pd.DataFrame:
@@ -54,13 +57,18 @@ class Preproccessing(PreprocessingABC):
         return pd.read_csv(path)
 
     def _encode_dataset(self):
+        types_to_encode = ['category', 'string', 'object']
         new_dataset = self.dataset.copy()
         for column in self.dataset.columns:
-            if self.dataset[column].dtype == 'string' or self.dataset[column].dtype == 'object':
-                new_dataset[column] = pd.Categorical(self.dataset[column])
-                new_dataset[column] = new_dataset[column].cat.codes
-        new_dataset = pd.get_dummies(self.dataset, drop_first=True)
-        self.dataset = pd.get_dummies(self.dataset, drop_first=True)
+            if False is self.dataset[column].unique()[0] or True is self.dataset[column].unique()[0]:
+                new_dataset[column] = new_dataset[column].astype('bool')
+            if new_dataset[column].dtype not in types_to_encode:
+                continue
+            if self.dataset[column].nunique() < self.one_hot_threshold:
+                new_dataset = pd.get_dummies(new_dataset, columns=[column])
+            else:
+                new_dataset.drop(column, axis=1, inplace=True)
+        self.dataset = new_dataset
 
     def _na_handling(self):
         self.dataset.dropna(inplace=True)
