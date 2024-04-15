@@ -22,47 +22,47 @@ class SOMBenchmark(BenchmarkABC):
 
     # Euclidean distance
     @staticmethod
-    def e_distance(x, y):
+    def _e_distance(x, y):
         return distance.euclidean(x, y)
 
     # Manhattan distance
     @staticmethod
-    def m_distance(x, y):
+    def _m_distance(x, y):
         return distance.cityblock(x, y)
 
     # Best Matching Unit search
-    def winning_neuron(self, data, t, som):
+    def _winning_neuron(self, data, t, som):
         winner = [0, 0]
         shortest_distance = np.sqrt(data.shape[1])  # initialise with max distance
         for row in range(self.num_rows):
             for col in range(self.num_cols):
-                distance = self.e_distance(som[row][col], data[t])
+                distance = self._e_distance(som[row][col], data[t])
                 if distance < shortest_distance:
                     shortest_distance = distance
                     winner = [row, col]
         return winner
 
     # Learning rate and neighbourhood range calculation
-    def decay(self, step):
+    def _decay(self, step):
         coefficient = 1.0 - (np.float64(step) / self.max_steps)
         learning_rate = coefficient * self.max_learning_rate
         neighbourhood_range = ceil(coefficient * self.max_m_distance)
         return learning_rate, neighbourhood_range
 
-    def predict(self, label_map, test_x, som):
+    def _predict(self, label_map, test_x, som):
         # test data
         # using the trained som, search the winning node of corresponding to the test data
         # get the label of the winning node
         winner_labels = []
         for t in range(test_x.shape[0]):
-            winner = self.winning_neuron(test_x, t, som)
+            winner = self._winning_neuron(test_x, t, som)
             row = winner[0]
             col = winner[1]
             predicted = label_map[row][col]
             winner_labels.append(predicted)
         return winner_labels
 
-    def construct_map(self, map):
+    def _construct_map(self, map):
         # construct label map by choosing the most popular label among collected ones
         label_map = np.zeros(shape=(self.num_rows, self.num_cols), dtype=np.int64)
         for row in range(self.num_rows):
@@ -81,7 +81,7 @@ class SOMBenchmark(BenchmarkABC):
         plt.show()
         return label_map
 
-    def collect_labels(self, train_x, train_y, som):
+    def _collect_labels(self, train_x, train_y, som):
         # collecting labels
         label_data = train_y
         map = np.empty(shape=(self.num_rows, self.num_cols), dtype=object)
@@ -89,19 +89,19 @@ class SOMBenchmark(BenchmarkABC):
             for col in range(self.num_cols):
                 map[row][col] = []  # empty list to store the label
         for t in range(train_x.shape[0]):
-            winner = self.winning_neuron(train_x, t, som)
+            winner = self._winning_neuron(train_x, t, som)
             map[winner[0]][winner[1]].append(label_data[t])  # label of winning neuron
         return map
 
-    def train(self, train_x, som):
+    def _train(self, train_x, som):
         # start training iterations
         for step in range(self.max_steps):
-            learning_rate, neighbourhood_range = self.decay(step)
+            learning_rate, neighbourhood_range = self._decay(step)
             t = np.random.randint(0, high=train_x.shape[0])  # random index of training data
-            winner = self.winning_neuron(train_x, t, som)
+            winner = self._winning_neuron(train_x, t, som)
             for row in range(self.num_rows):
                 for col in range(self.num_cols):
-                    if self.m_distance([row, col], winner) <= neighbourhood_range:
+                    if self._m_distance([row, col], winner) <= neighbourhood_range:
                         som[row][col] += learning_rate * (
                                 train_x[t] - som[row][col])  # update neighbour's weight
 
@@ -111,10 +111,10 @@ class SOMBenchmark(BenchmarkABC):
         train_x, test_x, train_y, test_y = train_test_split(data_x, data_y, test_size=0.2, random_state=42)
         num_dims = train_x.shape[1]  # number of dimensions in the input data
         som = np.random.random_sample(size=(self.num_rows, self.num_cols, num_dims))
-        self.train(train_x, som)
-        map = self.collect_labels(train_x, train_y, som)
-        label_map = self.construct_map(map)
-        winner_labels = self.predict(label_map, test_x, som)
+        self._train(train_x, som)
+        map = self._collect_labels(train_x, train_y, som)
+        label_map = self._construct_map(map)
+        winner_labels = self._predict(label_map, test_x, som)
         return accuracy_score(test_y, np.array(winner_labels))
 
 
