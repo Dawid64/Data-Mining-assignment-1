@@ -1,3 +1,5 @@
+import random
+
 import pandas as pd
 import simpsom as sps
 from _benchmark_abc import BenchmarkABC
@@ -10,30 +12,22 @@ class SOMBenchmark(BenchmarkABC):
         super().__init__()
 
     def evaluate(self, dataset: pd.DataFrame) -> float:
-        dataset_x = dataset.iloc[:, :-1]
-        print(dataset_x)
-        # labels = dataset.iloc[:, -1]
-        # net = sps.SOMNet(10, 10, dataset_x, init='random', PBC=True, GPU=False)
-        # net.train(epochs=100)
-        # net.plot_convergence(show=True, print_out=True)
-        # net.save('file', out_path='./')
-        # position_node0 = net.node_list[0].pos
-        # weights_node0 = net.node_list[0].weights
-        # net.nodes_graph(colnum=0, out_path='./')
-        # net.diff_graph(out_path='./')
-        # net.project(dataset_x, out_path='./')
-        # net.cluster(dataset_x)
-        som = SOM(m=10, n=10, dim=13)
-        som.fit(dataset)
-        pred = som.predict(dataset_x)
-        return 1.0
+        train, test = dataset.iloc[:int(dataset.shape[0] * 4 / 5), :], dataset.iloc[int(dataset.shape[0] * 4 / 5):, :]
+        train_x, _ = train.iloc[:, :-1].to_numpy(), train.iloc[:, -1].to_numpy()
+        test_x, test_y = test.iloc[:, :-1].to_numpy(), test.iloc[:, -1].to_numpy()
+        som = SOM(m=2, n=1, dim=8)
+        som.fit(train_x)
+        preds = som.predict(test_x)
+        return sum(abs(preds-test_y))/len(preds)
 
 
 if __name__ == '__main__':
     benchmark = SOMBenchmark()
     spaceship = pd.read_csv('spaceship-titanic/train.csv')
-    spaceship = spaceship.iloc[:, :-1]
-    spaceship.drop(['PassengerId', 'HomePlanet', 'Cabin', 'Destination', 'Name', 'CryoSleep', 'VIP'], axis=1,
+    spaceship.drop(['PassengerId', 'HomePlanet', 'Cabin', 'Destination', 'Name'], axis=1,
                    inplace=True)
     spaceship.dropna(inplace=True)
-    benchmark.evaluate(spaceship)
+    spaceship['CryoSleep'] = spaceship['CryoSleep'].astype(int)
+    spaceship['VIP'] = spaceship['VIP'].astype(int)
+    spaceship['Transported'] = spaceship['Transported'].astype(int)
+    print(benchmark.evaluate(spaceship))
