@@ -12,12 +12,13 @@ from _benchmark_abc import BenchmarkABC
 
 class SOMBenchmark(BenchmarkABC):
     def __init__(self, num_rows=10, num_cols=10, max_m_distance=4, max_learning_rate=0.5,
-                 max_steps=int(7.5 * 10e3)) -> None:
+                 max_steps=int(7.5 * 10e3), show_map=False) -> None:
         self.num_rows = num_rows
         self.num_cols = num_cols
         self.max_m_distance = max_m_distance
         self.max_learning_rate = max_learning_rate
         self.max_steps = max_steps
+        self.show_map = show_map
         super().__init__()
 
     # Euclidean distance
@@ -73,12 +74,13 @@ class SOMBenchmark(BenchmarkABC):
                 else:
                     label = max(label_list, key=label_list.count)
                 label_map[row][col] = label
-        title = ('Iteration ' + str(self.max_steps))
-        cmap = colors.ListedColormap(['tab:green', 'tab:red', 'tab:orange'])
-        plt.imshow(label_map, cmap=cmap)
-        plt.colorbar()
-        plt.title(title)
-        plt.show()
+        if self.show_map:
+            title = ('Iteration ' + str(self.max_steps))
+            cmap = colors.ListedColormap(['tab:green', 'tab:red', 'tab:orange'])
+            plt.imshow(label_map, cmap=cmap)
+            plt.colorbar()
+            plt.title(title)
+            plt.show()
         return label_map
 
     def _collect_labels(self, train_x, train_y, som):
