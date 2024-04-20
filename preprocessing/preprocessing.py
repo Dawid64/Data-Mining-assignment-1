@@ -65,17 +65,16 @@ class Preprocessing(PreprocessingABC):
         return pd.read_csv(path)
 
     def _split_features(self):
-        new_dataset = self.dataset.copy()
-        new_dataset[['GroupID', 'NumInGroup']] = new_dataset['PassengerId'].str.split('_', expand=True)
-        new_dataset.drop(['PassengerId'], axis=1, inplace=True)
-        new_dataset['GroupID'] = new_dataset['GroupID'].astype('category')
-        new_dataset['GroupID'] = new_dataset['GroupID'].astype('category')
-        new_dataset[['Deck', 'CabinNumber', "Side"]] = new_dataset['Cabin'].str.split('/', expand=True)
-        new_dataset.drop(['Cabin'], axis=1, inplace=True)
-        new_dataset['Deck'] = new_dataset['Deck'].astype('category')
-        new_dataset['CabinNumber'] = new_dataset['CabinNumber'].astype('category')
-        new_dataset['Side'] = new_dataset['Side'].astype('category')
-        self.dataset = new_dataset
+        self.dataset[['GroupID', 'NumInGroup']] = self.dataset['PassengerId'].str.split('_', expand=True)
+        self.dataset.drop(['PassengerId'], axis=1, inplace=True)
+        self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
+        self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
+        self.dataset[['Deck', 'CabinNumber', "Side"]] = self.dataset['Cabin'].str.split('/', expand=True)
+        self.dataset.drop(['Cabin'], axis=1, inplace=True)
+        self.dataset['Deck'] = self.dataset['Deck'].astype('category')
+        self.dataset['CabinNumber'] = self.dataset['CabinNumber'].astype('category')
+        self.dataset['Side'] = self.dataset['Side'].astype('category')
+        self.dataset = self.dataset
 
     def _encode_dataset(self):
         types_to_encode = ['category', 'string', 'object']
