@@ -53,6 +53,7 @@ class Preprocessing(PreprocessingABC):
         new_dataset = self.dataset.copy()
         new_dataset[num_columns.columns] = scaled_dataframe[num_columns.columns]
         new_dataset.dropna(inplace=True)
+        new_dataset = self.selector.select(new_dataset)
         return new_dataset
 
     def select(self) -> pd.DataFrame:
