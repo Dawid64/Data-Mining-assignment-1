@@ -1,5 +1,5 @@
-from selector import Selector
-from extractor import Extractor
+from .selector import Selector
+from .extractor import Extractor
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from abc import ABC, abstractmethod
@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 
 class PreprocessingABC(ABC):
     @abstractmethod
-    def preprocess(self, dataset: pd.DataFrame) -> pd.DataFrame:
+    def preprocess(self) -> pd.DataFrame:
         pass
 
     @abstractmethod
@@ -95,17 +95,3 @@ class Preprocessing(PreprocessingABC):
 
     def _na_handling(self):
         self.dataset.dropna(inplace=True)
-
-
-def main():
-    df = pd.read_csv("spaceship-titanic/train.csv")
-    print(df.head())
-    prep = Preprocessing(dataset=df)
-    prepped = prep.dataset
-    print(prepped.head())
-    scaled = prep.preprocess()
-    print(scaled.head())
-
-
-if __name__ == "__main__":
-    main()
