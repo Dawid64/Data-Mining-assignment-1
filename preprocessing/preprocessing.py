@@ -66,14 +66,17 @@ class Preprocessing(PreprocessingABC):
         return pd.read_csv(path)
 
     def _split_features(self):
-        self.dataset[['GroupID', 'NumInGroup']] = self.dataset['PassengerId'].str.split('_', expand=True)
+        self.dataset[['GroupID', 'NumInGroup']
+                     ] = self.dataset['PassengerId'].str.split('_', expand=True)
         self.dataset.drop(['PassengerId'], axis=1, inplace=True)
         self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
         self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
-        self.dataset[['Deck', 'CabinNumber', "Side"]] = self.dataset['Cabin'].str.split('/', expand=True)
+        self.dataset[['Deck', 'CabinNumber', "Side"]
+                     ] = self.dataset['Cabin'].str.split('/', expand=True)
         self.dataset.drop(['Cabin'], axis=1, inplace=True)
         self.dataset['Deck'] = self.dataset['Deck'].astype('category')
-        self.dataset['CabinNumber'] = self.dataset['CabinNumber'].astype('category')
+        self.dataset['CabinNumber'] = self.dataset['CabinNumber'].astype(
+            'category')
         self.dataset['Side'] = self.dataset['Side'].astype('category')
         self.dataset = self.dataset
 
@@ -86,11 +89,12 @@ class Preprocessing(PreprocessingABC):
             if new_dataset[column].dtype not in types_to_encode:
                 continue
             if self.dataset[column].nunique() < self.one_hot_threshold:
-                new_dataset = pd.get_dummies(new_dataset, columns=[column], dtype='bool')
+                new_dataset = pd.get_dummies(
+                    new_dataset, columns=[column], dtype='bool')
             else:
                 new_dataset.drop(column, axis=1, inplace=True)
-        target = new_dataset.pop('Transported')
-        new_dataset['Transported'] = target
+        target = new_dataset.pop(self.target)
+        new_dataset[self.target] = target
         self.dataset = new_dataset
 
     def _na_handling(self):
