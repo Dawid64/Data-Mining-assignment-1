@@ -8,7 +8,8 @@ from sklearn import datasets, preprocessing
 from sklearn.utils import Bunch
 from ._benchmark_abc import BenchmarkABC
 
-def _check_possibilities(x:list) -> int:
+
+def _check_possibilities(x: list) -> int:
     s = set()
     for i in x:
         if i[1] in s:
@@ -16,10 +17,11 @@ def _check_possibilities(x:list) -> int:
         s.add(i[1])
     return len(s)
 
+
 class DNN(BenchmarkABC):
     """
     This benchmark contains small instance of Deep Neural Network.
-    
+
     Neural Network contains linear hidden layer with 512 features (number of features can
     be changed in constructor) and ReLU normalization function.
     ## Parameters
@@ -27,23 +29,24 @@ class DNN(BenchmarkABC):
         Number of features in linear hidden layer.
     """
 
-    def __init__(self, hidden_features: int=512) -> None:
+    def __init__(self, hidden_features: int = 512) -> None:
         self._hidden_features = hidden_features
         super().__init__()
 
-    def evaluate(self, dataset: pd.DataFrame) -> float:
-        params = dataset.drop(['target'], axis=1).to_numpy()
+    def evaluate(self, dataset: pd.DataFrame, target: str = 'target') -> float:
+        params = dataset.drop([target], axis=1).to_numpy()
         x = torch.tensor(params, dtype=torch.float)
         y = torch.tensor([int(v) for v in dataset.target])
         dataset = data.TensorDataset(x, y)
         training, validation, test = data.random_split(dataset, [0.7, 0.1, 0.2],
-                                    generator=torch.Generator().manual_seed(42))
-        model = self._create_model(len(training[0][0]), _check_possibilities(training))
+                                                       generator=torch.Generator().manual_seed(42))
+        model = self._create_model(
+            len(training[0][0]), _check_possibilities(training))
         self._train_classifier(model, training, validation)
         logits = model(test[:][0])
         test_accuracy = self._compute_acc(logits, test[:][1]).item()
         return test_accuracy
-    
+
     def _create_model(self, input_size, output_size):
         return nn.Sequential(
             nn.Linear(input_size, self._hidden_features),
@@ -55,12 +58,12 @@ class DNN(BenchmarkABC):
         return (pred == expected).type(torch.float).mean()
 
     def _train_classifier(self,
-                model: nn.Module,
-                training: data.Dataset,
-                validation: data.Dataset,
-                no_improvement: int = 20,
-                batch_size: int = 128,
-                max_epochs: int = 10_000):
+                          model: nn.Module,
+                          training: data.Dataset,
+                          validation: data.Dataset,
+                          no_improvement: int = 20,
+                          batch_size: int = 128,
+                          max_epochs: int = 10_000):
         opt = optim.Adam(model.parameters())
         best_acc = 0
         improvement_check = 0
@@ -85,17 +88,19 @@ class DNN(BenchmarkABC):
             if epoch > max_epochs:
                 break
 
+
 def main():
-    digits:Bunch = datasets.load_digits()
+    digits: Bunch = datasets.load_digits()
     dataset = pd.DataFrame(np.concatenate([digits.data, np.array([digits.target]).T], axis=1),
-                           columns = digits.feature_names + ['target'])
+                           columns=digits.feature_names + ['target'])
     dnn = DNN()
     print('Before normalization:', dnn.evaluate(dataset))
-    binarize = preprocessing.Binarizer(threshold=8).fit(dataset.iloc[:,:-1])
-    X_binned = binarize.transform(dataset.iloc[:,:-1])
+    binarize = preprocessing.Binarizer(threshold=8).fit(dataset.iloc[:, :-1])
+    X_binned = binarize.transform(dataset.iloc[:, :-1])
     X_binned_2 = pd.DataFrame(np.concatenate([X_binned, np.array([digits.target]).T], axis=1),
                               columns=digits.feature_names + ['target'])
     print('After normalization', dnn.evaluate(X_binned_2))
+
 
 if __name__ == '__main__':
     main()
