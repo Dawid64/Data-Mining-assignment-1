@@ -1,6 +1,6 @@
 """
-The :mod:`preprocessing` module includes tools for data preprecessing
-as well asmodule for benchmarking them.
+The :mod:`preprocessing` module includes tools for data preprocessing
+as well as module for benchmarking them.
 """
 from .extractor import PCAExtractor
-from .preprocessing import Preproccessing
+from .preprocessing import Preprocessing

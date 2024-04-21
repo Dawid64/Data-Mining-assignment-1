@@ -7,7 +7,11 @@ from abc import ABC, abstractmethod
 
 class PreprocessingABC(ABC):
     @abstractmethod
-    def preprocess(self, dataset: pd.DataFrame) -> pd.DataFrame:
+    def preprocess(self) -> pd.DataFrame:
+        pass
+
+    @abstractmethod
+    def _split_features(self):
         pass
 
     @abstractmethod
@@ -15,6 +19,7 @@ class PreprocessingABC(ABC):
         pass
 
     def _prepare_dataset(self):
+        self._split_features()
         self._encode_dataset()
         self._na_handling()
 
@@ -23,7 +28,7 @@ class PreprocessingABC(ABC):
         pass
 
 
-class Preproccessing(PreprocessingABC):
+class Preprocessing(PreprocessingABC):
 
     def __init__(self, dataset: pd.DataFrame = None, path: str = None, target: str = None,
                  selector: Selector = None, extractor: Extractor = None, one_hot_threshold: float = 0.1) -> None:
@@ -40,11 +45,15 @@ class Preproccessing(PreprocessingABC):
         self.one_hot_threshold = one_hot_threshold * self.dataset.shape[0]
         self._prepare_dataset()
 
-    def preprocess(self, dataset: pd.DataFrame) -> pd.DataFrame:
-        dataset_scaled = StandardScaler().fit_transform(dataset.data)
+    def preprocess(self) -> pd.DataFrame:
+        num_columns = self.dataset.select_dtypes(include=['number'])
+        dataset_scaled = StandardScaler().fit_transform(num_columns.to_numpy())
         scaled_dataframe = pd.DataFrame(
-            dataset_scaled, columns=dataset.feature_names)
-        new_dataset = self.selector.select(scaled_dataframe)
+            dataset_scaled, columns=num_columns.columns)
+        new_dataset = self.dataset.copy()
+        new_dataset[num_columns.columns] = scaled_dataframe[num_columns.columns]
+        new_dataset.dropna(inplace=True)
+        new_dataset = self.selector.select(new_dataset)
         return new_dataset
 
     def select(self) -> pd.DataFrame:
@@ -56,6 +65,18 @@ class Preproccessing(PreprocessingABC):
     def _load_dataset(self, path: str) -> pd.DataFrame:
         return pd.read_csv(path)
 
+    def _split_features(self):
+        self.dataset[['GroupID', 'NumInGroup']] = self.dataset['PassengerId'].str.split('_', expand=True)
+        self.dataset.drop(['PassengerId'], axis=1, inplace=True)
+        self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
+        self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
+        self.dataset[['Deck', 'CabinNumber', "Side"]] = self.dataset['Cabin'].str.split('/', expand=True)
+        self.dataset.drop(['Cabin'], axis=1, inplace=True)
+        self.dataset['Deck'] = self.dataset['Deck'].astype('category')
+        self.dataset['CabinNumber'] = self.dataset['CabinNumber'].astype('category')
+        self.dataset['Side'] = self.dataset['Side'].astype('category')
+        self.dataset = self.dataset
+
     def _encode_dataset(self):
         types_to_encode = ['category', 'string', 'object']
         new_dataset = self.dataset.copy()
@@ -65,9 +86,11 @@ class Preproccessing(PreprocessingABC):
             if new_dataset[column].dtype not in types_to_encode:
                 continue
             if self.dataset[column].nunique() < self.one_hot_threshold:
-                new_dataset = pd.get_dummies(new_dataset, columns=[column])
+                new_dataset = pd.get_dummies(new_dataset, columns=[column], dtype='bool')
             else:
                 new_dataset.drop(column, axis=1, inplace=True)
+        target = new_dataset.pop('Transported')
+        new_dataset['Transported'] = target
         self.dataset = new_dataset
 
     def _na_handling(self):
