@@ -1,5 +1,6 @@
 from .selector import Selector
 from .extractor import Extractor
+from .cabin_processing import cabin_to_side
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from abc import ABC, abstractmethod
@@ -46,16 +47,17 @@ class Preprocessing(PreprocessingABC):
         self._prepare_dataset()
 
     def preprocess(self) -> pd.DataFrame:
-        num_columns = self.dataset.select_dtypes(include=['number'])
+        new_dataset = self.dataset.dropna()
+        new_dataset = cabin_to_side(new_dataset)
+        new_dataset = self.selector.select(new_dataset, 0.02)
+        
+        num_columns = new_dataset.select_dtypes(include=['number'])
         dataset_scaled = StandardScaler().fit_transform(num_columns.to_numpy())
         scaled_dataframe = pd.DataFrame(
             dataset_scaled, columns=num_columns.columns)
-        new_dataset = self.dataset.copy()
-        new_dataset[num_columns.columns] = scaled_dataframe[num_columns.columns]
-        new_dataset.dropna(inplace=True)
-        new_dataset = self.selector.select(new_dataset)
-        return new_dataset
-
+        final_dataset = self.dataset.copy()
+        final_dataset[num_columns.columns] = scaled_dataframe[num_columns.columns]
+    
     def select(self) -> pd.DataFrame:
         return self.selector.select(self.dataset)
 
