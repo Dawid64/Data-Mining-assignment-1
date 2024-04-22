@@ -6,7 +6,7 @@ def test_extractor():
     """ Testing common extractor """
     extractor = Extractor()
     data_frame = pd.DataFrame(data={'a': [1, 2, 3], 'b': [4, 5, 6]})
-    assert (extractor.extract(data_frame) == data_frame).all().all()
+    assert data_frame.equals(extractor.extract(data_frame))
 
 
 def test_pca_extractor():
@@ -19,4 +19,4 @@ def test_pca_extractor():
                                          'PC2': [0.0, 0.0, 0.0, 0.0]})
     data_frame = pd.DataFrame(data=data)
     result = extractor.extract(data_frame)
-    assert (result.round(10) == expected_result).all().all()
+    assert (expected_result == result.round(10)).all().all()
