@@ -109,7 +109,7 @@ class SOMBenchmark(BenchmarkABC):
             for row in range(self.num_rows):
                 for col in range(self.num_cols):
                     if self._m_distance([row, col], winner) <= neighbourhood_range:
-                        som[row][col] += learning_rate * (
+                        som[row][col] = som[row][col]+ learning_rate * (
                             train_x[t] - som[row][col])  # update neighbour's weight
 
     def evaluate(self, dataset: pd.DataFrame) -> float:
@@ -124,7 +124,7 @@ class SOMBenchmark(BenchmarkABC):
         map = self._collect_labels(train_x, train_y, som)
         label_map = self._construct_map(map)
         winner_labels = self._predict(label_map, test_x, som)
-        return accuracy_score(test_y, np.array(winner_labels))
+        return float(accuracy_score(test_y, np.array(winner_labels)))
 
 
 if __name__ == '__main__':

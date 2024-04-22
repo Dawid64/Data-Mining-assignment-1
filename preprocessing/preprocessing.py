@@ -19,9 +19,9 @@ class PreprocessingABC(ABC):
         pass
 
     def _prepare_dataset(self):
+        self._na_handling()
         self._split_features()
         self._encode_dataset()
-        self._na_handling()
 
     @abstractmethod
     def _na_handling(self):
@@ -69,28 +69,28 @@ class Preprocessing(PreprocessingABC):
         self.dataset[['GroupID', 'NumInGroup']
                      ] = self.dataset['PassengerId'].str.split('_', expand=True)
         self.dataset.drop(['PassengerId'], axis=1, inplace=True)
-        self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
-        self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
+        self.dataset['GroupID'] = self.dataset['GroupID'].astype(int)
+        self.dataset['NumInGroup'] = self.dataset['NumInGroup'].astype(int)
         self.dataset[['Deck', 'CabinNumber', "Side"]
                      ] = self.dataset['Cabin'].str.split('/', expand=True)
         self.dataset.drop(['Cabin'], axis=1, inplace=True)
-        self.dataset['Deck'] = self.dataset['Deck'].astype('category')
+        self.dataset['Deck'] = self.dataset['Deck'].astype(object)
         self.dataset['CabinNumber'] = self.dataset['CabinNumber'].astype(
-            'category')
-        self.dataset['Side'] = self.dataset['Side'].astype('category')
+            int)
+        self.dataset['Side'] = self.dataset['Side'].astype(object)
         self.dataset = self.dataset
 
     def _encode_dataset(self):
-        types_to_encode = ['category', 'string', 'object']
+        types_to_encode = ['category', 'string', object]
         new_dataset = self.dataset.copy()
         for column in self.dataset.columns:
             if False is self.dataset[column].unique()[0] or True is self.dataset[column].unique()[0]:
-                new_dataset[column] = new_dataset[column].astype('bool')
+                new_dataset[column] = new_dataset[column].astype(bool)
             if new_dataset[column].dtype not in types_to_encode:
                 continue
             if self.dataset[column].nunique() < self.one_hot_threshold:
                 new_dataset = pd.get_dummies(
-                    new_dataset, columns=[column], dtype='bool')
+                    new_dataset, columns=[column])
             else:
                 new_dataset.drop(column, axis=1, inplace=True)
         target = new_dataset.pop(self.target)
