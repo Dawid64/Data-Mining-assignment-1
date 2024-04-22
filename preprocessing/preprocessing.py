@@ -1,8 +1,10 @@
-from .selector import Selector
-from .extractor import Extractor
+from abc import ABC, abstractmethod
+
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from abc import ABC, abstractmethod
+
+from .selector import Selector
+from .extractor import Extractor
 
 
 class PreprocessingABC(ABC):
@@ -43,23 +45,37 @@ class Preprocessing(PreprocessingABC):
         self.selector = Selector() if selector is None else selector
         self.extractor = Extractor() if extractor is None else extractor
         self.one_hot_threshold = one_hot_threshold * self.dataset.shape[0]
-        self._prepare_dataset()
 
-    def preprocess(self) -> pd.DataFrame:
+    def scale(self) -> pd.DataFrame:
         num_columns = self.dataset.select_dtypes(include=['number'])
         dataset_scaled = StandardScaler().fit_transform(num_columns.to_numpy())
         scaled_dataframe = pd.DataFrame(
             dataset_scaled, columns=num_columns.columns)
         new_dataset = self.dataset.copy()
         new_dataset[num_columns.columns] = scaled_dataframe[num_columns.columns]
-        new_dataset.dropna(inplace=True)
-        new_dataset = self.selector.select(new_dataset)
         return new_dataset
 
-    def select(self) -> pd.DataFrame:
+    def preprocess(self) -> pd.DataFrame:
+
+        self._split_features()
+        self.select(inplace=True)
+        self._encode_dataset()
+        self._na_handling()
+        self.extract(inplace=True)
+        self._na_handling()
+
+        return self.dataset
+
+    def select(self, inplace: bool = False) -> pd.DataFrame:
+        if inplace:
+            self.dataset = self.selector.select(self.dataset)
+            return self.dataset
         return self.selector.select(self.dataset)
 
-    def extract(self) -> pd.DataFrame:
+    def extract(self, inplace: bool = False) -> pd.DataFrame:
+        if inplace:
+            self.dataset = self.extractor.extract(self.dataset)
+            return self.dataset
         return self.extractor.extract(self.dataset)
 
     def _load_dataset(self, path: str) -> pd.DataFrame:
@@ -70,7 +86,6 @@ class Preprocessing(PreprocessingABC):
                      ] = self.dataset['PassengerId'].str.split('_', expand=True)
         self.dataset.drop(['PassengerId'], axis=1, inplace=True)
         self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
-        self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
         self.dataset[['Deck', 'CabinNumber', "Side"]
                      ] = self.dataset['Cabin'].str.split('/', expand=True)
         self.dataset.drop(['Cabin'], axis=1, inplace=True)
@@ -78,7 +93,6 @@ class Preprocessing(PreprocessingABC):
         self.dataset['CabinNumber'] = self.dataset['CabinNumber'].astype(
             'category')
         self.dataset['Side'] = self.dataset['Side'].astype('category')
-        self.dataset = self.dataset
 
     def _encode_dataset(self):
         types_to_encode = ['category', 'string', 'object']
