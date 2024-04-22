@@ -1,11 +1,4 @@
-import pytest
 from preprocessing.benchmarks._benchmark_abc import BenchmarkABC
-
-
-@pytest.mark.parametrize('test123', [1, 2, 3, 4])
-def test_abc1(test123):
-    """ test pytest parametrize """
-    assert isinstance(test123, int)
 
 
 def test_abc():
