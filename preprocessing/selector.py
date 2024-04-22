@@ -2,15 +2,19 @@ from abc import ABC
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
+
 class Selector(ABC):
     def select(self, dataset: pd.DataFrame) -> pd.DataFrame:
         return dataset
-    
-    
+
+
 class VARSelector(Selector):
-    def select(self, dataset: pd.DataFrame, var_treshold:float = 0.002) -> pd.DataFrame:
+    def __init__(self, var_treshold: float = 0.0017) -> None:
+        self.var_treshold = var_treshold
+
+    def select(self, dataset: pd.DataFrame) -> pd.DataFrame:
         new_dataset = self._drop_unique(dataset)
-        new_dataset = self._drop_low_var(new_dataset, var_treshold)
+        new_dataset = self._drop_low_var(new_dataset, self.var_treshold)
         new_dataset = self._discrete_selection(new_dataset)
         return new_dataset
 
@@ -18,7 +22,7 @@ class VARSelector(Selector):
         '''
         Drops columns with unique or very rarely repeating values that are not floats
         '''
-        new_dataset = dataset.copy()  
+        new_dataset = dataset.copy()
         threshold = len(new_dataset) * 0.01
 
         for column in new_dataset.columns:
@@ -27,9 +31,9 @@ class VARSelector(Selector):
 
                 if freq_most_common < threshold:
                     new_dataset.drop(column, axis=1, inplace=True)
-  
+
         return new_dataset
-    
+
     def _drop_low_var(self, dataset: pd.DataFrame, threshold: float) -> pd.DataFrame:
         '''
         Drops columns from the dataset with variances below the given threshold.
@@ -38,8 +42,8 @@ class VARSelector(Selector):
         dataset_scaled = MinMaxScaler().fit_transform(data_num.to_numpy())
         scaled_dataframe = pd.DataFrame(
             dataset_scaled, columns=data_num.columns)
-        
-        variances = scaled_dataframe.var() 
+
+        variances = scaled_dataframe.var()
 
         low_variance_columns = variances[variances < threshold].index
 
@@ -47,7 +51,5 @@ class VARSelector(Selector):
         return dataset_filtered
 
     def _discrete_selection(self, dataset: pd.DataFrame) -> pd.DataFrame:
-        #Marcin TODO
+        # Marcin TODO
         return dataset
-    
-    
