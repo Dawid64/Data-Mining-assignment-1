@@ -1,13 +1,13 @@
 import numpy as np
-import pandas as pd
 from numpy.ma.core import ceil
+import pandas as pd
 from scipy.spatial import distance
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 from matplotlib import colors
-from sklearn.preprocessing import MinMaxScaler
-from _benchmark_abc import BenchmarkABC
+from ._benchmark_abc import BenchmarkABC
 
 
 class SOMBenchmark(BenchmarkABC):
@@ -34,7 +34,8 @@ class SOMBenchmark(BenchmarkABC):
     # Best Matching Unit search
     def _winning_neuron(self, data, t, som):
         winner = [0, 0]
-        shortest_distance = np.sqrt(data.shape[1])  # initialise with max distance
+        # initialise with max distance
+        shortest_distance = np.sqrt(data.shape[1])
         for row in range(self.num_rows):
             for col in range(self.num_cols):
                 distance = self._e_distance(som[row][col], data[t])
@@ -65,7 +66,8 @@ class SOMBenchmark(BenchmarkABC):
 
     def _construct_map(self, map):
         # construct label map by choosing the most popular label among collected ones
-        label_map = np.zeros(shape=(self.num_rows, self.num_cols), dtype=np.int64)
+        label_map = np.zeros(
+            shape=(self.num_rows, self.num_cols), dtype=np.int64)
         for row in range(self.num_rows):
             for col in range(self.num_cols):
                 label_list = map[row][col]
@@ -76,7 +78,8 @@ class SOMBenchmark(BenchmarkABC):
                 label_map[row][col] = label
         if self.show_map:
             title = ('Iteration ' + str(self.max_steps))
-            cmap = colors.ListedColormap(['tab:green', 'tab:red', 'tab:orange'])
+            cmap = colors.ListedColormap(
+                ['tab:green', 'tab:red', 'tab:orange'])
             plt.imshow(label_map, cmap=cmap)
             plt.colorbar()
             plt.title(title)
@@ -92,27 +95,31 @@ class SOMBenchmark(BenchmarkABC):
                 map[row][col] = []  # empty list to store the label
         for t in range(train_x.shape[0]):
             winner = self._winning_neuron(train_x, t, som)
-            map[winner[0]][winner[1]].append(label_data[t])  # label of winning neuron
+            map[winner[0]][winner[1]].append(
+                label_data[t])  # label of winning neuron
         return map
 
     def _train(self, train_x, som):
         # start training iterations
         for step in range(self.max_steps):
             learning_rate, neighbourhood_range = self._decay(step)
-            t = np.random.randint(0, high=train_x.shape[0])  # random index of training data
+            # random index of training data
+            t = np.random.randint(0, high=train_x.shape[0])
             winner = self._winning_neuron(train_x, t, som)
             for row in range(self.num_rows):
                 for col in range(self.num_cols):
                     if self._m_distance([row, col], winner) <= neighbourhood_range:
                         som[row][col] += learning_rate * (
-                                train_x[t] - som[row][col])  # update neighbour's weight
+                            train_x[t] - som[row][col])  # update neighbour's weight
 
     def evaluate(self, dataset: pd.DataFrame) -> float:
         data_x = dataset.iloc[:, :-1].to_numpy()
         data_y = dataset.iloc[:, -1].to_numpy()
-        train_x, test_x, train_y, test_y = train_test_split(data_x, data_y, test_size=0.2, random_state=42)
+        train_x, test_x, train_y, test_y = train_test_split(
+            data_x, data_y, test_size=0.2, random_state=42)
         num_dims = train_x.shape[1]  # number of dimensions in the input data
-        som = np.random.random_sample(size=(self.num_rows, self.num_cols, num_dims))
+        som = np.random.random_sample(
+            size=(self.num_rows, self.num_cols, num_dims))
         self._train(train_x, som)
         map = self._collect_labels(train_x, train_y, som)
         label_map = self._construct_map(map)
@@ -122,10 +129,11 @@ class SOMBenchmark(BenchmarkABC):
 
 if __name__ == '__main__':
     benchmark = SOMBenchmark()
-    spaceship = pd.read_csv('../../spaceship-titanic/train.csv')
+    spaceship = pd.read_csv('spaceship-titanic/train.csv')
 
     # The simplest preprocessing just to make the algorithm work
-    spaceship.drop(['PassengerId', 'HomePlanet', 'Cabin', 'Destination', 'Name'], axis=1, inplace=True)
+    spaceship.drop(['PassengerId', 'HomePlanet', 'Cabin',
+                   'Destination', 'Name'], axis=1, inplace=True)
     spaceship.dropna(inplace=True)
     spaceship['CryoSleep'] = spaceship['CryoSleep'].astype(int)
     spaceship['VIP'] = spaceship['VIP'].astype(int)
