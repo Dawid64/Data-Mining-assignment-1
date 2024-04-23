@@ -59,6 +59,7 @@ class Preprocessing(PreprocessingABC):
         self._na_handling()
         self._split_features()
         self.select(inplace=True)
+        self.dataset = self.scale()
         self._encode_dataset()
         self.extract(inplace=True)
 
