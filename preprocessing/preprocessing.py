@@ -112,7 +112,7 @@ class Preprocessing(PreprocessingABC):
     def _na_handling(self):
         cat = self.dataset.select_dtypes(include=['category', 'object'])
         numbers = self.dataset.select_dtypes(include=['number'])
-        numbers.fillna(0)
+        numbers.fillna(0, inplace=True)
         modes = cat.mode().iloc[0]
         for col in cat.columns:
             cat[col].fillna(modes[col], inplace=True)
