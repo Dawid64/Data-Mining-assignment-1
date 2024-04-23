@@ -5,12 +5,19 @@ import seaborn as sns
 from sklearn.preprocessing import StandardScaler
 
 
-def covariance_heatmap(data: pd.DataFrame) -> None:
-    columns = data.select_dtypes(include=['number', 'bool']).dropna()
+def covariance_heatmap(dataset: pd.DataFrame) -> None:
+    columns = dataset.select_dtypes(include=['number', 'bool']).dropna()
     X = StandardScaler().fit_transform(columns)
     n = len(columns)
     C = np.dot(X.T, X)/(n-1)
     plt.figure(figsize=(4, 4))
     sns.heatmap(C, xticklabels=columns.columns,
                 yticklabels=columns.columns, cmap='magma')
+    plt.show()
+
+
+def pair_plot(dataset: pd.DataFrame, target: str = 'target') -> None:
+    if target not in dataset:
+        target = None
+    sns.pairplot(dataset, hue=target)
     plt.show()
