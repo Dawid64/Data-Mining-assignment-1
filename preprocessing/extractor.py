@@ -22,7 +22,6 @@ class PCAExtractor(Extractor):
                              f'PC{i}' for i in range(1, self.num_components + 1)])
         if self.target in dataset.columns:
             frame[self.target] = dataset[self.target].astype('float64')
-        print(frame)
         return frame
 
 

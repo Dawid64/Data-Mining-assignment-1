@@ -111,11 +111,12 @@ class Preprocessing(PreprocessingABC):
         self.dataset = new_dataset
 
     def _na_handling(self):
-        cat = self.dataset.select_dtypes(include=['category', 'object'])
+        cat = self.dataset.select_dtypes(
+            include=['category', 'object', 'bool'])
         numbers = self.dataset.select_dtypes(include=['number'])
         numbers.fillna(0, inplace=True)
         modes = cat.mode().iloc[0]
         for col in cat.columns:
             cat[col].fillna(modes[col], inplace=True)
         self.dataset = pd.concat([cat, numbers], axis=1)
-        #self.dataset.dropna(inplace=True)
+        # self.dataset.dropna(inplace=True)
