@@ -32,8 +32,8 @@ class PreprocessingABC(ABC):
 
 class Preprocessing(PreprocessingABC):
 
-    def __init__(self, dataset: pd.DataFrame = None, path: str = None, target: str = None,
-                 selector: Selector = None, extractor: Extractor = None, one_hot_threshold: float = 0.1) -> None:
+    def __init__(self, dataset: pd.DataFrame = None, path: str = None, target: str = 'target',
+                 selector: Selector = None, extractor: Extractor = None, one_hot_threshold: float = 0.9) -> None:
         if path is not None:
             self.dataset = self._load_dataset(path)
         elif dataset is not None:
