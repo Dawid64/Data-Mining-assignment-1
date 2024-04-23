@@ -1,5 +1,6 @@
 from abc import ABC
 import pandas as pd
+from numpy import float64
 from sklearn.preprocessing import MinMaxScaler
 
 
@@ -26,7 +27,7 @@ class VARSelector(Selector):
         threshold = len(new_dataset) * 0.01
 
         for column in new_dataset.columns:
-            if new_dataset[column].dtype != 'float64':
+            if new_dataset[column].dtype != float64:
                 freq_most_common = new_dataset[column].value_counts().max()
 
                 if freq_most_common < threshold:

@@ -5,6 +5,7 @@ from sklearn.preprocessing import StandardScaler
 
 from .selector import Selector
 from .extractor import Extractor
+from numpy import float64
 
 
 class PreprocessingABC(ABC):
@@ -82,15 +83,15 @@ class Preprocessing(PreprocessingABC):
 
     def _split_features(self):
         self.dataset[['GroupID', 'NumInGroup']
-                     ] = self.dataset['PassengerId'].str.split('_', expand=True)
+        ] = self.dataset['PassengerId'].str.split('_', expand=True)
         self.dataset.drop(['PassengerId'], axis=1, inplace=True)
         self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
         self.dataset[['Deck', 'CabinNumber', "Side"]
-                     ] = self.dataset['Cabin'].str.split('/', expand=True)
+        ] = self.dataset['Cabin'].str.split('/', expand=True)
         self.dataset.drop(['Cabin'], axis=1, inplace=True)
         self.dataset['Deck'] = self.dataset['Deck'].astype('category')
         self.dataset['CabinNumber'] = self.dataset['CabinNumber'].astype(
-            'category')
+            float64)
         self.dataset['Side'] = self.dataset['Side'].astype('category')
 
     def _encode_dataset(self):
@@ -111,12 +112,11 @@ class Preprocessing(PreprocessingABC):
         self.dataset = new_dataset
 
     def _na_handling(self):
-        cat = self.dataset.select_dtypes(
-            include=['category', 'object', 'bool'])
-        numbers = self.dataset.select_dtypes(include=['number'])
+        cat = self.dataset.iloc[:, :-1].select_dtypes(include=['category', 'object'])
+        numbers = self.dataset.iloc[:, :-1].select_dtypes(include=['number'])
         numbers.fillna(0, inplace=True)
         modes = cat.mode().iloc[0]
         for col in cat.columns:
             cat[col].fillna(modes[col], inplace=True)
-        self.dataset = pd.concat([cat, numbers], axis=1)
-        # self.dataset.dropna(inplace=True)
+        self.dataset = pd.concat([cat, numbers, self.dataset[self.target]], axis=1)
+        #self.dataset.dropna(inplace=True)
