@@ -56,13 +56,11 @@ class Preprocessing(PreprocessingABC):
         return new_dataset
 
     def preprocess(self) -> pd.DataFrame:
-
+        self._na_handling()
         self._split_features()
         self.select(inplace=True)
         self._encode_dataset()
-        self._na_handling()
         self.extract(inplace=True)
-        self._na_handling()
 
         return self.dataset
 
@@ -112,4 +110,11 @@ class Preprocessing(PreprocessingABC):
         self.dataset = new_dataset
 
     def _na_handling(self):
-        self.dataset.dropna(inplace=True)
+        cat = self.dataset.select_dtypes(include=['category', 'object'])
+        numbers = self.dataset.select_dtypes(include=['number'])
+        numbers.fillna(0)
+        modes = cat.mode().iloc[0]
+        for col in cat.columns:
+            cat[col].fillna(modes[col], inplace=True)
+        self.dataset = pd.concat([cat, numbers], axis=1)
+        #self.dataset.dropna(inplace=True)
