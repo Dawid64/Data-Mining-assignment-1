@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def simple_plot(data1: pd.Series, data2: pd.Series, y: pd.Series):
+def simple_plot(data1: pd.Series, data2: pd.Series, y: pd.Series) -> None:
     y = y.astype(int)
     colrs = np.array(['red', 'green', 'blue', 'pink', 'yellow',
                       'black', 'purple', 'orange', 'brown', 'gray'])
