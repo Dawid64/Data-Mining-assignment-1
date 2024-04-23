@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def simple_plot(data1: pd.Series, data2: pd.Series, y: pd.Series) -> None:
+def simple_plot(data1: pd.Series, data2: pd.Series, y: pd.Series, save: str = None) -> None:
     y = y.astype(int)
     colrs = np.array(['red', 'green', 'blue', 'pink', 'yellow',
                       'black', 'purple', 'orange', 'brown', 'gray'])
@@ -17,4 +17,7 @@ def simple_plot(data1: pd.Series, data2: pd.Series, y: pd.Series) -> None:
     ax.set_ylabel(data2.name, fontsize=15)
     ax.grid()
     ax.scatter(data1, data2, c=colrs[y], s=20)
-    plt.show()
+    if save:
+        plt.savefig(save)
+    else:
+        plt.show()
