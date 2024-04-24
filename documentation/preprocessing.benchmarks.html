@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>preprocessing.benchmarks package &mdash; Preprocess 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Preprocess
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">preprocessing.benchmarks package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-preprocessing.benchmarks.classifier">preprocessing.benchmarks.classifier module</a><ul>
+<li><a class="reference internal" href="#preprocessing.benchmarks.classifier.ClassifierBenchmark"><code class="docutils literal notranslate"><span class="pre">ClassifierBenchmark</span></code></a><ul>
+<li><a class="reference internal" href="#preprocessing.benchmarks.classifier.ClassifierBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">ClassifierBenchmark.evaluate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-preprocessing.benchmarks.dnn">preprocessing.benchmarks.dnn module</a><ul>
+<li><a class="reference internal" href="#preprocessing.benchmarks.dnn.DNNBenchmark"><code class="docutils literal notranslate"><span class="pre">DNNBenchmark</span></code></a><ul>
+<li><a class="reference internal" href="#preprocessing.benchmarks.dnn.DNNBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">DNNBenchmark.evaluate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preprocessing.benchmarks.dnn.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-preprocessing.benchmarks.som">preprocessing.benchmarks.som module</a><ul>
+<li><a class="reference internal" href="#preprocessing.benchmarks.som.SOMBenchmark"><code class="docutils literal notranslate"><span class="pre">SOMBenchmark</span></code></a><ul>
+<li><a class="reference internal" href="#preprocessing.benchmarks.som.SOMBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">SOMBenchmark.evaluate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-preprocessing.benchmarks">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Preprocess</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">preprocessing.benchmarks package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/preprocessing.benchmarks.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="preprocessing-benchmarks-package">
+<h1>preprocessing.benchmarks package<a class="headerlink" href="#preprocessing-benchmarks-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-preprocessing.benchmarks.classifier">
+<span id="preprocessing-benchmarks-classifier-module"></span><h2>preprocessing.benchmarks.classifier module<a class="headerlink" href="#module-preprocessing.benchmarks.classifier" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="preprocessing.benchmarks.classifier.ClassifierBenchmark">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocessing.benchmarks.classifier.</span></span><span class="sig-name descname"><span class="pre">ClassifierBenchmark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">printing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.benchmarks.classifier.ClassifierBenchmark" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BenchmarkABC</span></code></p>
+<p>Classifier benchmarking class.
+Splits class into train and test data, trains classifier on train data and evaluates it on test data.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocessing.benchmarks.classifier.ClassifierBenchmark.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'target'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#preprocessing.benchmarks.classifier.ClassifierBenchmark.evaluate" title="Link to this definition"></a></dt>
+<dd><p>This method checks the quality of given dataset using current benchmark.
+If provided dataset is more suitable for this benchmark method should return higher value.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>dataset (pd.DataFrame): dataframe that we want to evaluate</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: _description_</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-preprocessing.benchmarks.dnn">
+<span id="preprocessing-benchmarks-dnn-module"></span><h2>preprocessing.benchmarks.dnn module<a class="headerlink" href="#module-preprocessing.benchmarks.dnn" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="preprocessing.benchmarks.dnn.DNNBenchmark">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocessing.benchmarks.dnn.</span></span><span class="sig-name descname"><span class="pre">DNNBenchmark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hidden_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">512</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.benchmarks.dnn.DNNBenchmark" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BenchmarkABC</span></code></p>
+<p>This benchmark contains small instance of Deep Neural Network.</p>
+<p>Neural Network contains linear hidden layer with 512 features (number of features can
+be changed in constructor) and ReLU normalization function.
+## Parameters
+hidden_features : int, default : 512</p>
+<blockquote>
+<div><p>Number of features in linear hidden layer.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocessing.benchmarks.dnn.DNNBenchmark.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'target'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#preprocessing.benchmarks.dnn.DNNBenchmark.evaluate" title="Link to this definition"></a></dt>
+<dd><p>This method checks the quality of given dataset using current benchmark.
+If provided dataset is more suitable for this benchmark method should return higher value.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>dataset (pd.DataFrame): dataframe that we want to evaluate</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: _description_</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="preprocessing.benchmarks.dnn.main">
+<span class="sig-prename descclassname"><span class="pre">preprocessing.benchmarks.dnn.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.benchmarks.dnn.main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-preprocessing.benchmarks.som">
+<span id="preprocessing-benchmarks-som-module"></span><h2>preprocessing.benchmarks.som module<a class="headerlink" href="#module-preprocessing.benchmarks.som" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="preprocessing.benchmarks.som.SOMBenchmark">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocessing.benchmarks.som.</span></span><span class="sig-name descname"><span class="pre">SOMBenchmark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_m_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">75000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.benchmarks.som.SOMBenchmark" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BenchmarkABC</span></code></p>
+<p>Self-Organizing Map (SOM) Benchmark class.</p>
+<p>This class implements a Self-Organizing Map (SOM) algorithm for data mining tasks.
+It provides methods for training the SOM, evaluating its performance, and making predictions.</p>
+<p>Parameters:
+- num_rows (int): Number of rows in the SOM grid.
+- num_cols (int): Number of columns in the SOM grid.
+- max_m_distance (int): Maximum Manhattan distance for neighborhood range calculation.
+- max_learning_rate (float): Maximum learning rate for weight update.
+- max_steps (int): Maximum number of training steps.
+- show_map (bool): Flag indicating whether to display the SOM label map.</p>
+<p>Methods:
+- evaluate(dataset: pd.DataFrame) -&gt; float:</p>
+<blockquote>
+<div><p>Evaluates the performance of the SOM on a given dataset and returns the accuracy score.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocessing.benchmarks.som.SOMBenchmark.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#preprocessing.benchmarks.som.SOMBenchmark.evaluate" title="Link to this definition"></a></dt>
+<dd><p>This method checks the quality of given dataset using current benchmark.
+If provided dataset is more suitable for this benchmark method should return higher value.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>dataset (pd.DataFrame): dataframe that we want to evaluate</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: _description_</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-preprocessing.benchmarks">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-preprocessing.benchmarks" title="Link to this heading"></a></h2>
+<p>The <a class="reference internal" href="#module-preprocessing.benchmarks" title="preprocessing.benchmarks"><code class="xref py py-mod docutils literal notranslate"><span class="pre">preprocessing.benchmarks</span></code></a> subpackage includes several benchmarks for testing either
+the data preprocessing gives promissing results or not.</p>
+<p>Curently implemented benchmarks:
+- ClassifierBenchmark - Simple classification algorithm.
+- DNNBenchmark - Deep Neural Network algorithm.
+- SOMBenchmark - Self-Organizing tree algorithm.</p>
+<p>## Usage:
+&gt;&gt;&gt; from preprocessing.benchmarks import DNNBenchmark
+&gt;&gt;&gt; dataset = pd.read_csv(‘your_dataset.csv’)
+&gt;&gt;&gt; dnn = DNNBenchmark()
+&gt;&gt;&gt; dnn.evaluate(dataset, target=’Your Target’)</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Data Dwarfs.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>preprocessing package &mdash; Preprocess 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Preprocess
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">preprocessing package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-preprocessing.extractor">preprocessing.extractor module</a><ul>
+<li><a class="reference internal" href="#preprocessing.extractor.Extractor"><code class="docutils literal notranslate"><span class="pre">Extractor</span></code></a><ul>
+<li><a class="reference internal" href="#preprocessing.extractor.Extractor.extract"><code class="docutils literal notranslate"><span class="pre">Extractor.extract()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preprocessing.extractor.LDAExtractor"><code class="docutils literal notranslate"><span class="pre">LDAExtractor</span></code></a><ul>
+<li><a class="reference internal" href="#preprocessing.extractor.LDAExtractor.extract"><code class="docutils literal notranslate"><span class="pre">LDAExtractor.extract()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preprocessing.extractor.PCAExtractor"><code class="docutils literal notranslate"><span class="pre">PCAExtractor</span></code></a><ul>
+<li><a class="reference internal" href="#preprocessing.extractor.PCAExtractor.extract"><code class="docutils literal notranslate"><span class="pre">PCAExtractor.extract()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-preprocessing.preprocessing">preprocessing.preprocessing module</a><ul>
+<li><a class="reference internal" href="#preprocessing.preprocessing.Preprocessing"><code class="docutils literal notranslate"><span class="pre">Preprocessing</span></code></a><ul>
+<li><a class="reference internal" href="#preprocessing.preprocessing.Preprocessing.preprocess"><code class="docutils literal notranslate"><span class="pre">Preprocessing.preprocess()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preprocessing.preprocessing.SpaceShipPreprocessing"><code class="docutils literal notranslate"><span class="pre">SpaceShipPreprocessing</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-preprocessing.selector">preprocessing.selector module</a><ul>
+<li><a class="reference internal" href="#preprocessing.selector.Selector"><code class="docutils literal notranslate"><span class="pre">Selector</span></code></a><ul>
+<li><a class="reference internal" href="#preprocessing.selector.Selector.select"><code class="docutils literal notranslate"><span class="pre">Selector.select()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preprocessing.selector.VARSelector"><code class="docutils literal notranslate"><span class="pre">VARSelector</span></code></a><ul>
+<li><a class="reference internal" href="#preprocessing.selector.VARSelector.select"><code class="docutils literal notranslate"><span class="pre">VARSelector.select()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-preprocessing">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Preprocess</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">preprocessing package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/preprocessing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="preprocessing-package">
+<h1>preprocessing package<a class="headerlink" href="#preprocessing-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.benchmarks.html">preprocessing.benchmarks package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.benchmarks.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.benchmarks.html#module-preprocessing.benchmarks.classifier">preprocessing.benchmarks.classifier module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.benchmarks.html#preprocessing.benchmarks.classifier.ClassifierBenchmark"><code class="docutils literal notranslate"><span class="pre">ClassifierBenchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="preprocessing.benchmarks.html#preprocessing.benchmarks.classifier.ClassifierBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">ClassifierBenchmark.evaluate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.benchmarks.html#module-preprocessing.benchmarks.dnn">preprocessing.benchmarks.dnn module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.benchmarks.html#preprocessing.benchmarks.dnn.DNNBenchmark"><code class="docutils literal notranslate"><span class="pre">DNNBenchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="preprocessing.benchmarks.html#preprocessing.benchmarks.dnn.DNNBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">DNNBenchmark.evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.benchmarks.html#preprocessing.benchmarks.dnn.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.benchmarks.html#module-preprocessing.benchmarks.som">preprocessing.benchmarks.som module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.benchmarks.html#preprocessing.benchmarks.som.SOMBenchmark"><code class="docutils literal notranslate"><span class="pre">SOMBenchmark</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="preprocessing.benchmarks.html#preprocessing.benchmarks.som.SOMBenchmark.evaluate"><code class="docutils literal notranslate"><span class="pre">SOMBenchmark.evaluate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.benchmarks.html#module-preprocessing.benchmarks">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.vizualization.html">preprocessing.vizualization package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.vizualization.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.vizualization.html#module-preprocessing.vizualization.data_analysis">preprocessing.vizualization.data_analysis module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.vizualization.html#preprocessing.vizualization.data_analysis.covariance_heatmap"><code class="docutils literal notranslate"><span class="pre">covariance_heatmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.vizualization.html#preprocessing.vizualization.data_analysis.pair_plot"><code class="docutils literal notranslate"><span class="pre">pair_plot()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.vizualization.html#module-preprocessing.vizualization.two_dimensional">preprocessing.vizualization.two_dimensional module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.vizualization.html#preprocessing.vizualization.two_dimensional.compare_tape_graphs"><code class="docutils literal notranslate"><span class="pre">compare_tape_graphs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.vizualization.html#preprocessing.vizualization.two_dimensional.simple_plot"><code class="docutils literal notranslate"><span class="pre">simple_plot()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.vizualization.html#module-preprocessing.vizualization">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-preprocessing.extractor">
+<span id="preprocessing-extractor-module"></span><h2>preprocessing.extractor module<a class="headerlink" href="#module-preprocessing.extractor" title="Link to this heading"></a></h2>
+<p>This module contains classes for feature extraction using Principal Component Analysis (PCA) and Linear Discriminant Analysis (LDA).</p>
+<p>Classes:
+- Extractor: The base class for feature extraction.
+- PCAExtractor: Performs PCA dimensionality reduction on a dataset.
+- LDAExtractor: Performs LDA dimensionality reduction on a dataset.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="preprocessing.extractor.Extractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocessing.extractor.</span></span><span class="sig-name descname"><span class="pre">Extractor</span></span><a class="headerlink" href="#preprocessing.extractor.Extractor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The base class for feature extraction.</p>
+<p>This class provides an interface-like structure for feature extraction algorithms.
+Subclasses should implement the <cite>extract</cite> method to perform the actual feature extraction.</p>
+<dl class="simple">
+<dt>## Parameters:</dt><dd><p>None</p>
+</dd>
+<dt>## Methods:</dt><dd><p>extract: Perform feature extraction on the given dataset.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocessing.extractor.Extractor.extract">
+<span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#preprocessing.extractor.Extractor.extract" title="Link to this definition"></a></dt>
+<dd><p>Perform feature extraction on the given dataset.</p>
+<dl class="simple">
+<dt>### Args:</dt><dd><p>dataset (pd.DataFrame): The input dataset.</p>
+</dd>
+<dt>### Returns:</dt><dd><p>pd.DataFrame: The dataset after feature extraction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="preprocessing.extractor.LDAExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocessing.extractor.</span></span><span class="sig-name descname"><span class="pre">LDAExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'target'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.extractor.LDAExtractor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#preprocessing.extractor.Extractor" title="preprocessing.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>LDAExtractor is a class that performs Linear Discriminant Analysis (LDA) dimensionality reduction on a dataset.</p>
+<dl class="simple">
+<dt>## Parameters:</dt><dd><p>num_components (int): The number of components to keep after dimensionality reduction. Default is 2.
+target (str): The name of the target variable in the dataset. Default is ‘target’.</p>
+</dd>
+<dt>## Methods:</dt><dd><dl class="simple">
+<dt>extract(dataset: pd.DataFrame) -&gt; pd.DataFrame:</dt><dd><p>Applies LDA dimensionality reduction on the input dataset and returns the transformed dataset.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocessing.extractor.LDAExtractor.extract">
+<span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#preprocessing.extractor.LDAExtractor.extract" title="Link to this definition"></a></dt>
+<dd><p>Applies LDA dimensionality reduction on the input dataset and returns the transformed dataset.</p>
+<dl class="simple">
+<dt>### Args:</dt><dd><p>dataset (pd.DataFrame): The input dataset to perform LDA on.</p>
+</dd>
+<dt>### Returns:</dt><dd><p>pd.DataFrame: The transformed dataset after LDA dimensionality reduction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="preprocessing.extractor.PCAExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocessing.extractor.</span></span><span class="sig-name descname"><span class="pre">PCAExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_components</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'target'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.extractor.PCAExtractor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#preprocessing.extractor.Extractor" title="preprocessing.extractor.Extractor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Extractor</span></code></a></p>
+<p>PCAExtractor is a class that performs Principal Component Analysis (PCA) dimensionality reduction on a dataset.</p>
+<dl class="simple">
+<dt>## Parameters:</dt><dd><p>num_components (int): The number of components to keep after dimensionality reduction. Default is 2.
+target (str): The name of the target variable in the dataset. Default is ‘target’.</p>
+</dd>
+<dt>## Methods:</dt><dd><dl class="simple">
+<dt>extract(dataset: pd.DataFrame) -&gt; pd.DataFrame:</dt><dd><p>Applies PCA dimensionality reduction on the input dataset and returns the transformed dataset.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocessing.extractor.PCAExtractor.extract">
+<span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#preprocessing.extractor.PCAExtractor.extract" title="Link to this definition"></a></dt>
+<dd><p>Applies PCA dimensionality reduction on the input dataset and returns the transformed dataset.</p>
+<dl class="simple">
+<dt>### Args:</dt><dd><p>dataset (pd.DataFrame): The input dataset to perform PCA on.</p>
+</dd>
+<dt>### Returns:</dt><dd><p>pd.DataFrame: The transformed dataset after PCA dimensionality reduction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-preprocessing.preprocessing">
+<span id="preprocessing-preprocessing-module"></span><h2>preprocessing.preprocessing module<a class="headerlink" href="#module-preprocessing.preprocessing" title="Link to this heading"></a></h2>
+<p>Module with main preprocessing class.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="preprocessing.preprocessing.Preprocessing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocessing.preprocessing.</span></span><span class="sig-name descname"><span class="pre">Preprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'target'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#preprocessing.selector.Selector" title="preprocessing.selector.Selector"><span class="pre">Selector</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extractor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#preprocessing.extractor.Extractor" title="preprocessing.extractor.Extractor"><span class="pre">Extractor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_hot_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.preprocessing.Preprocessing" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_PreprocessingABC</span></code></p>
+<p>A class for performing data preprocessing tasks.</p>
+<p>### Parameters:
+- dataset (pd.DataFrame):</p>
+<blockquote>
+<div><p>The input dataset to be preprocessed.</p>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt>path (str):</dt><dd><p>The path to the dataset file. Either <cite>dataset</cite> or <cite>path</cite> must be provided.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>target (str):</dt><dd><p>The name of the target variable in the dataset.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>selector (Selector):</dt><dd><p>An instance of the Selector class for feature selection.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>extractor (Extractor):</dt><dd><p>An instance of the Extractor class for feature extraction.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>one_hot_threshold (float):</dt><dd><p>The threshold for one-hot encoding. Default is 0.9.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>### Methods:
+- preprocess():</p>
+<blockquote>
+<div><p>Perform the complete preprocessing pipeline.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocessing.preprocessing.Preprocessing.preprocess">
+<span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#preprocessing.preprocessing.Preprocessing.preprocess" title="Link to this definition"></a></dt>
+<dd><p>Main method for performing the complete preprocessing pipeline.</p>
+<p>### !!! preprocess works on the dataset inplace !!!</p>
+<dl class="simple">
+<dt>### Returns:</dt><dd><p>pd.DataFrame: The preprocessed dataset.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="preprocessing.preprocessing.SpaceShipPreprocessing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocessing.preprocessing.</span></span><span class="sig-name descname"><span class="pre">SpaceShipPreprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'target'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#preprocessing.selector.Selector" title="preprocessing.selector.Selector"><span class="pre">Selector</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extractor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#preprocessing.extractor.Extractor" title="preprocessing.extractor.Extractor"><span class="pre">Extractor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_hot_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.preprocessing.SpaceShipPreprocessing" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#preprocessing.preprocessing.Preprocessing" title="preprocessing.preprocessing.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">Preprocessing</span></code></a></p>
+<p>Specific preprocessing class for the Spaceship-titanic dataset.</p>
+<p>Works the same as Preprocessing class with addition of splitting few specific features into few different features.</p>
+</dd></dl>
+
+</section>
+<section id="module-preprocessing.selector">
+<span id="preprocessing-selector-module"></span><h2>preprocessing.selector module<a class="headerlink" href="#module-preprocessing.selector" title="Link to this heading"></a></h2>
+<p>Module for feature selection.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="preprocessing.selector.Selector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocessing.selector.</span></span><span class="sig-name descname"><span class="pre">Selector</span></span><a class="headerlink" href="#preprocessing.selector.Selector" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The base class for feature selection.</p>
+<p>This class provides an interface-like structure for feature selection algorithms.
+Subclasses should implement the <cite>select</cite> method to perform the actual feature selection.</p>
+<dl class="simple">
+<dt>### Attributes:</dt><dd><p>None</p>
+</dd>
+<dt>### Methods:</dt><dd><p>select: Perform feature selection on the given dataset.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocessing.selector.Selector.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#preprocessing.selector.Selector.select" title="Link to this definition"></a></dt>
+<dd><p>Perform feature selection on the given dataset.</p>
+<dl class="simple">
+<dt>### Args:</dt><dd><p>dataset (pd.DataFrame): The input dataset.</p>
+</dd>
+<dt>### Returns:</dt><dd><p>pd.DataFrame: The dataset after feature selection.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="preprocessing.selector.VARSelector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">preprocessing.selector.</span></span><span class="sig-name descname"><span class="pre">VARSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_treshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0017</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#preprocessing.selector.VARSelector" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#preprocessing.selector.Selector" title="preprocessing.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a></p>
+<p>VarSelector is a class for feature selection based on variance.</p>
+<dl class="simple">
+<dt>### Parameters:</dt><dd><dl class="simple">
+<dt>var_treshold<span class="classifier">float, default=0.0017: </span></dt><dd><p>The threshold value for variance. Features with variances below this threshold will be dropped. Default is 0.0017.</p>
+</dd>
+</dl>
+</dd>
+<dt>### Methods:</dt><dd><dl class="simple">
+<dt>select(dataset: pd.DataFrame) -&gt; pd.DataFrame:</dt><dd><p>TODO</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="preprocessing.selector.VARSelector.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#preprocessing.selector.VARSelector.select" title="Link to this definition"></a></dt>
+<dd><p>Perform feature selection on the given dataset by focusing at variance.</p>
+<dl class="simple">
+<dt>### Args:</dt><dd><p>dataset (pd.DataFrame): The input dataset.</p>
+</dd>
+<dt>### Returns:</dt><dd><p>pd.DataFrame: The dataset after feature selection.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-preprocessing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-preprocessing" title="Link to this heading"></a></h2>
+<p>The <a class="reference internal" href="#module-preprocessing" title="preprocessing"><code class="xref py py-mod docutils literal notranslate"><span class="pre">preprocessing</span></code></a> package includes tools for basic data preprocessing including data standarization, feature selection and feature extraction.
+As well as subpackages for benchmarking the quality of dataset and vizualization of the data.</p>
+<p>## It includes:
+- feature extraction:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>PCAExtractor</p></li>
+<li><p>LDAExtractor</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt>feature selection:</dt><dd><ul>
+<li><p>VARSelector</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>preprocessing:</dt><dd><ul>
+<li><p>Preprocessing</p></li>
+<li><p>SpaceShipPreprocessing</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>benchmarks (subpackage for benchmarking)</p></li>
+<li><p>vizualization (subpackage for vizualizations)</p></li>
+</ul>
+<p>## Usage:
+&gt;&gt;&gt; import pandas as pd
+&gt;&gt;&gt; import preprocessing as pr
+&gt;&gt;&gt; dataset = pd.read_csv(‘Your_dataset.csv’)
+&gt;&gt;&gt; selector = pr.VARSelector()
+&gt;&gt;&gt; extractor = pr.PCAExtractor(num_components=8, target=’Your_Target’)
+&gt;&gt;&gt; preprocessing = pr.Preprocessing(dataset, target=’Your_Target’,
+&gt;&gt;&gt;                                  selector=selector, extractor=extractor)
+&gt;&gt;&gt; new_dataset = preprocessing.preprocess()
+&gt;&gt;&gt; dnn = pr.benchmarks.DNNBenchmark()
+&gt;&gt;&gt; dnn.evaluate(new_dataset, target=’Your_Target’)</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Data Dwarfs.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
