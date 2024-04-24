@@ -126,8 +126,9 @@ class Preprocessing(PreprocessingABC):
         numbers = self.dataset.iloc[:, :-1].select_dtypes(include=['number'])
         numbers.fillna(0, inplace=True)
         modes = cat.mode().iloc[0]
-        for col in cat.columns:
-            cat[col].fillna(modes[col], inplace=True)
+        pd.set_option('future.no_silent_downcasting', True)
+        cat.fillna({col: modes[col] for col in cat.columns}, inplace=True)
+        pd.set_option('future.no_silent_downcasting', False)
         self.dataset = pd.concat(
             [cat, numbers, self.dataset[self.target]], axis=1)
 
