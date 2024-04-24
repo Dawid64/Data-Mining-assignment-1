@@ -46,3 +46,30 @@ git clone https://github.com/Dawid64/Data-Mining-assignment-1.git
 pip install .
 ```
 ---
+### How to use:
+There are 2 jupiter notebooks that will introduce you to this package:
+`notebook_1_clf.ipynb` and `notebook_2_dnn.ipynb`.
+
+I recomend starting with them with dataset `spaceship-titanic` from kaggle: https://www.kaggle.com/competitions/spaceship-titanic/data 
+
+---
+Here are some results of our work:
+
+![Comparison with 10 hidden features](images/10_features.png)
+![Comparison with 10 hidden features](images/50_features.png)
+
+---
+### Example usage:
+Preprocessing dataset and benchmarking it on DNN
+```py
+import pandas as pd
+import preprocessing as pr
+dataset = pd.read_csv('Your_dataset.csv')
+selector = pr.VARSelector()
+extractor = pr.PCAExtractor(num_components=8, target='Your_Target')
+preprocessing = pr.Preprocessing(dataset, target='Your_Target',
+                                 selector=selector, extractor=extractor)
+new_dataset = preprocessing.preprocess()
+dnn = pr.benchmarks.DNNBenchmark()
+dnn.evaluate(new_dataset, target='Your_Target')
+```
