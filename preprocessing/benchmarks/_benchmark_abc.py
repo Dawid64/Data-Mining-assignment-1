@@ -2,6 +2,7 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 
+
 class BenchmarkABC(ABC):
     """Abstract class for dataset preprocessing benchmarking.
     """

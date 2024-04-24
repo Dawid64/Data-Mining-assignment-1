@@ -11,6 +11,26 @@ from ._benchmark_abc import BenchmarkABC
 
 
 class SOMBenchmark(BenchmarkABC):
+    """
+    Self-Organizing Map (SOM) Benchmark class.
+
+    This class implements a Self-Organizing Map (SOM) algorithm for data mining tasks.
+    It provides methods for training the SOM, evaluating its performance, and making predictions.
+
+    Parameters:
+    - num_rows (int): Number of rows in the SOM grid.
+    - num_cols (int): Number of columns in the SOM grid.
+    - max_m_distance (int): Maximum Manhattan distance for neighborhood range calculation.
+    - max_learning_rate (float): Maximum learning rate for weight update.
+    - max_steps (int): Maximum number of training steps.
+    - show_map (bool): Flag indicating whether to display the SOM label map.
+
+    Methods:
+    - evaluate(dataset: pd.DataFrame) -> float:
+        Evaluates the performance of the SOM on a given dataset and returns the accuracy score.
+
+    """
+
     def __init__(self, num_rows=10, num_cols=10, max_m_distance=4, max_learning_rate=0.5,
                  max_steps=int(7.5 * 10e3), show_map=False) -> None:
         self.num_rows = num_rows
