@@ -28,8 +28,8 @@ def compare_tape_graphs(tape1: list[float], tape2: list[float], save: str = None
     ax = fig.add_subplot(1, 1, 1)
 
     ax.set_title('Comparison between two tapes', fontsize=20)
-    ax.set_xlabel('Accuracy', fontsize=15)
-    ax.set_ylabel('No. Epoch', fontsize=15)
+    ax.set_xlabel('No. Epoch', fontsize=15)
+    ax.set_ylabel('Accuracy', fontsize=15)
     ax.grid()
     ax.plot(tape1, label='Tape 1')
     ax.plot(tape2, label='Tape 2')
