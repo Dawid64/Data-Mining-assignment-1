@@ -1,28 +1,72 @@
-from abc import ABC
+"""
+Module for feature selection.
+"""
 import pandas as pd
 from numpy import float64
 from sklearn.preprocessing import MinMaxScaler
 
 
-class Selector(ABC):
+class Selector:
+    """
+    The base class for feature selection.
+
+    This class provides an interface-like structure for feature selection algorithms.
+    Subclasses should implement the `select` method to perform the actual feature selection.
+
+    ### Attributes:
+        None
+
+    ### Methods:
+        select: Perform feature selection on the given dataset.
+
+    """
+
     def select(self, dataset: pd.DataFrame) -> pd.DataFrame:
+        """
+        Perform feature selection on the given dataset.
+
+        ### Args:
+            dataset (pd.DataFrame): The input dataset.
+
+        ### Returns:
+            pd.DataFrame: The dataset after feature selection.
+
+        """
         return dataset
 
 
 class VARSelector(Selector):
+    """
+    VarSelector is a class for feature selection based on variance.
+
+    ### Parameters:
+        var_treshold : float, default=0.0017: 
+            The threshold value for variance. Features with variances below this threshold will be dropped. Default is 0.0017.
+    ### Methods:
+        select(dataset: pd.DataFrame) -> pd.DataFrame:
+            TODO
+
+    """
+
     def __init__(self, var_treshold: float = 0.0017) -> None:
         self.var_treshold = var_treshold
 
     def select(self, dataset: pd.DataFrame) -> pd.DataFrame:
+        """
+        Perform feature selection on the given dataset by focusing at variance.
+
+        ### Args:
+            dataset (pd.DataFrame): The input dataset.
+
+        ### Returns:
+            pd.DataFrame: The dataset after feature selection.
+
+        """
         new_dataset = self._drop_unique(dataset)
         new_dataset = self._drop_low_var(new_dataset, self.var_treshold)
-        new_dataset = self._discrete_selection(new_dataset)
         return new_dataset
 
     def _drop_unique(self, dataset: pd.DataFrame) -> pd.DataFrame:
-        '''
-        Drops columns with unique or very rarely repeating values that are not floats
-        '''
         new_dataset = dataset.copy()
         threshold = len(new_dataset) * 0.01
 
@@ -36,9 +80,6 @@ class VARSelector(Selector):
         return new_dataset
 
     def _drop_low_var(self, dataset: pd.DataFrame, threshold: float) -> pd.DataFrame:
-        '''
-        Drops columns from the dataset with variances below the given threshold.
-        '''
         data_num = dataset.select_dtypes(include=['number'])
         dataset_scaled = MinMaxScaler().fit_transform(data_num.to_numpy())
         scaled_dataframe = pd.DataFrame(
@@ -50,7 +91,3 @@ class VARSelector(Selector):
 
         dataset_filtered = dataset.drop(columns=low_variance_columns)
         return dataset_filtered
-
-    def _discrete_selection(self, dataset: pd.DataFrame) -> pd.DataFrame:
-        # Marcin TODO
-        return dataset
