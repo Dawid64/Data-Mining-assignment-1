@@ -1,13 +1,13 @@
 import pandas as pd
 
-from preprocessing.preprocessing import Preprocessing, PreprocessingABC
+from preprocessing.preprocessing import Preprocessing, _PreprocessingABC
 from preprocessing.selector import VARSelector, Selector
 from preprocessing.extractor import PCAExtractor, Extractor
 
 
 def test_preprocessing_abc():
     """ Testing PreprocessingABC """
-    class PreprocessingABCImpl(PreprocessingABC):
+    class PreprocessingABCImpl(_PreprocessingABC):
         def preprocess(self) -> pd.DataFrame:
             pass
 
@@ -22,7 +22,7 @@ def test_preprocessing_abc():
 
     preprocessing_abc = PreprocessingABCImpl()
     assert preprocessing_abc is not None
-    assert isinstance(preprocessing_abc, PreprocessingABC)
+    assert isinstance(preprocessing_abc, _PreprocessingABC)
 
 
 def test_preprocessing():
