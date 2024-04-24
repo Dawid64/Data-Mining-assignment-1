@@ -6,6 +6,7 @@ Currently implemented visualization functions:
 - covariance_heatmap: Generates a heatmap to visualize the covariance between variables in a dataset.
 - pair_plot: Generates a pair plot to visualize the relationships between variables in a dataset.
 - simple_plot: Generates a simple plot to visualize a relationship between 2 variables in a dataset.
+- compare_tape_graphs: Generates a plot to comparing the performance of two models over time.
 
 ## Usage:
 >>> from preprocessing.vizualization import covariance_heatmap, pair_plot, simple_plot
@@ -17,4 +18,4 @@ Currently implemented visualization functions:
 
 
 from .data_analysis import covariance_heatmap, pair_plot
-from .two_dimensional import simple_plot
+from .two_dimensional import simple_plot, compare_tape_graphs
