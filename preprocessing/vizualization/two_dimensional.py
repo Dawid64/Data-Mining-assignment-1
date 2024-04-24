@@ -4,6 +4,18 @@ import matplotlib.pyplot as plt
 
 
 def simple_plot(data1: pd.Series, data2: pd.Series, y: pd.Series, save: str = None) -> None:
+    """
+    Generate a scatter plot comparing two data series.
+
+    ### Parameters:
+    - data1 (pd.Series): First data series to be plotted.
+    - data2 (pd.Series): Second data series to be plotted.
+    - y (pd.Series): Categorical labels for coloring the data points.
+    - save (str, optional): File path to save the plot. If not provided, the plot will be displayed.
+
+    ### Returns:
+    None
+    """
     y = y.astype(int)
     colrs = np.array(['red', 'green', 'blue', 'pink', 'yellow',
                       'black', 'purple', 'orange', 'brown', 'gray'])
@@ -24,6 +36,17 @@ def simple_plot(data1: pd.Series, data2: pd.Series, y: pd.Series, save: str = No
 
 
 def compare_tape_graphs(tape1: list[float], tape2: list[float], save: str = None) -> None:
+    """
+    Compare two tapes by plotting their accuracy over epochs.
+
+    ### Parameters:
+    tape1 (list[float]): The accuracy values for tape 1.
+    tape2 (list[float]): The accuracy values for tape 2.
+    save (str, optional): The file path to save the plot. If not provided, the plot will be displayed.
+
+    ### Returns:
+    None
+    """
     fig = plt.figure(figsize=(6, 6))
     ax = fig.add_subplot(1, 1, 1)
 
