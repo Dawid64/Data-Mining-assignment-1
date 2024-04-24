@@ -21,17 +21,39 @@ class PreprocessingABC(ABC):
     def _encode_dataset(self):
         pass
 
-    def _prepare_dataset(self):
-        self._split_features()
-        self._encode_dataset()
-        self._na_handling()
-
     @abstractmethod
     def _na_handling(self):
         pass
 
 
 class Preprocessing(PreprocessingABC):
+    """
+    A class for performing data preprocessing tasks.
+
+    ## Parameters:
+    - dataset (pd.DataFrame):
+        The input dataset to be preprocessed.
+    - path (str):
+        The path to the dataset file. Either `dataset` or `path` must be provided.
+    - target (str):
+        The name of the target variable in the dataset.
+    - selector (Selector):
+        An instance of the Selector class for feature selection.
+    - extractor (Extractor):
+        An instance of the Extractor class for feature extraction.
+    - one_hot_threshold (float):
+        The threshold for one-hot encoding. Default is 0.9.
+
+    ## Methods:
+    - scale():
+        Scale the numerical columns in the dataset using StandardScaler.
+    - preprocess():
+        Perform the complete preprocessing pipeline.
+    - select(inplace):
+        bool = False): Select the relevant features from the dataset.
+    - extract(inplace):
+        bool = False): Extract additional features from the dataset.
+    """
 
     def __init__(self, dataset: pd.DataFrame = None, path: str = None, target: str = 'target',
                  selector: Selector = None, extractor: Extractor = None, one_hot_threshold: float = 0.9) -> None:
@@ -81,19 +103,6 @@ class Preprocessing(PreprocessingABC):
     def _load_dataset(self, path: str) -> pd.DataFrame:
         return pd.read_csv(path)
 
-    def _split_features(self):
-        self.dataset[['GroupID', 'NumInGroup']
-        ] = self.dataset['PassengerId'].str.split('_', expand=True)
-        self.dataset.drop(['PassengerId'], axis=1, inplace=True)
-        self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
-        self.dataset[['Deck', 'CabinNumber', "Side"]
-        ] = self.dataset['Cabin'].str.split('/', expand=True)
-        self.dataset.drop(['Cabin'], axis=1, inplace=True)
-        self.dataset['Deck'] = self.dataset['Deck'].astype('category')
-        self.dataset['CabinNumber'] = self.dataset['CabinNumber'].astype(
-            float64)
-        self.dataset['Side'] = self.dataset['Side'].astype('category')
-
     def _encode_dataset(self):
         types_to_encode = ['category', 'string', 'object']
         new_dataset = self.dataset.copy()
@@ -112,11 +121,36 @@ class Preprocessing(PreprocessingABC):
         self.dataset = new_dataset
 
     def _na_handling(self):
-        cat = self.dataset.iloc[:, :-1].select_dtypes(include=['category', 'object'])
+        cat = self.dataset.iloc[:, :-1].select_dtypes(include=['category',
+                                                               'object', 'bool'])
         numbers = self.dataset.iloc[:, :-1].select_dtypes(include=['number'])
         numbers.fillna(0, inplace=True)
         modes = cat.mode().iloc[0]
         for col in cat.columns:
             cat[col].fillna(modes[col], inplace=True)
-        self.dataset = pd.concat([cat, numbers, self.dataset[self.target]], axis=1)
-        #self.dataset.dropna(inplace=True)
+        self.dataset = pd.concat(
+            [cat, numbers, self.dataset[self.target]], axis=1)
+
+    def _split_features(self):
+        pass
+
+
+class SpaceShipPreprocessing(Preprocessing):
+    """
+    Specific preprocessing class for the Spaceship-titanic dataset.
+
+    Works the same as Preprocessing class with addition of splitting few specific features into few different features.
+    """
+
+    def _split_features(self):
+        self.dataset[['GroupID', 'NumInGroup']
+                     ] = self.dataset['PassengerId'].str.split('_', expand=True)
+        self.dataset.drop(['PassengerId'], axis=1, inplace=True)
+        self.dataset['GroupID'] = self.dataset['GroupID'].astype('category')
+        self.dataset[['Deck', 'CabinNumber', "Side"]
+                     ] = self.dataset['Cabin'].str.split('/', expand=True)
+        self.dataset.drop(['Cabin'], axis=1, inplace=True)
+        self.dataset['Deck'] = self.dataset['Deck'].astype('category')
+        self.dataset['CabinNumber'] = self.dataset['CabinNumber'].astype(
+            'category')
+        self.dataset['Side'] = self.dataset['Side'].astype('category')
