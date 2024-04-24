@@ -1,3 +1,6 @@
+"""
+Module with main preprocessing class.
+"""
 from abc import ABC, abstractmethod
 
 import pandas as pd
@@ -8,7 +11,7 @@ from .extractor import Extractor
 from numpy import float64
 
 
-class PreprocessingABC(ABC):
+class _PreprocessingABC(ABC):
     @abstractmethod
     def preprocess(self) -> pd.DataFrame:
         pass
@@ -26,11 +29,11 @@ class PreprocessingABC(ABC):
         pass
 
 
-class Preprocessing(PreprocessingABC):
+class Preprocessing(_PreprocessingABC):
     """
     A class for performing data preprocessing tasks.
 
-    ## Parameters:
+    ### Parameters:
     - dataset (pd.DataFrame):
         The input dataset to be preprocessed.
     - path (str):
@@ -44,15 +47,9 @@ class Preprocessing(PreprocessingABC):
     - one_hot_threshold (float):
         The threshold for one-hot encoding. Default is 0.9.
 
-    ## Methods:
-    - scale():
-        Scale the numerical columns in the dataset using StandardScaler.
+    ### Methods:
     - preprocess():
         Perform the complete preprocessing pipeline.
-    - select(inplace):
-        bool = False): Select the relevant features from the dataset.
-    - extract(inplace):
-        bool = False): Extract additional features from the dataset.
     """
 
     def __init__(self, dataset: pd.DataFrame = None, path: str = None, target: str = 'target',
@@ -69,32 +66,43 @@ class Preprocessing(PreprocessingABC):
         self.extractor = Extractor() if extractor is None else extractor
         self.one_hot_threshold = one_hot_threshold * self.dataset.shape[0]
 
-    def scale(self) -> pd.DataFrame:
+    def preprocess(self) -> pd.DataFrame:
+        """
+        Main method for performing the complete preprocessing pipeline.
+
+        ### !!! preprocess works on the dataset inplace !!!
+
+        ### Returns:
+            pd.DataFrame: The preprocessed dataset.
+        """
+        self._na_handling()
+        self._split_features()
+        self._select(inplace=True)
+        self._scale(inplace=True)
+        self._encode_dataset()
+        self._extract(inplace=True)
+
+        return self.dataset
+
+    def _scale(self, inplace: bool = False) -> pd.DataFrame:
         num_columns = self.dataset.select_dtypes(include=['number'])
         dataset_scaled = StandardScaler().fit_transform(num_columns.to_numpy())
         scaled_dataframe = pd.DataFrame(
             dataset_scaled, columns=num_columns.columns)
         new_dataset = self.dataset.copy()
         new_dataset[num_columns.columns] = scaled_dataframe[num_columns.columns]
+        if inplace:
+            self.dataset = new_dataset
+            return self.dataset
         return new_dataset
 
-    def preprocess(self) -> pd.DataFrame:
-        self._na_handling()
-        self._split_features()
-        self.select(inplace=True)
-        self.dataset = self.scale()
-        self._encode_dataset()
-        self.extract(inplace=True)
-
-        return self.dataset
-
-    def select(self, inplace: bool = False) -> pd.DataFrame:
+    def _select(self, inplace: bool = False) -> pd.DataFrame:
         if inplace:
             self.dataset = self.selector.select(self.dataset)
             return self.dataset
         return self.selector.select(self.dataset)
 
-    def extract(self, inplace: bool = False) -> pd.DataFrame:
+    def _extract(self, inplace: bool = False) -> pd.DataFrame:
         if inplace:
             self.dataset = self.extractor.extract(self.dataset)
             return self.dataset
