@@ -161,5 +161,5 @@ class SpaceShipPreprocessing(Preprocessing):
         self.dataset.drop(['Cabin'], axis=1, inplace=True)
         self.dataset['Deck'] = self.dataset['Deck'].astype('category')
         self.dataset['CabinNumber'] = self.dataset['CabinNumber'].astype(
-            'category')
+            'float64')
         self.dataset['Side'] = self.dataset['Side'].astype('category')
