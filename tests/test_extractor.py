@@ -23,9 +23,10 @@ def test_pca_extractor():
     assert extractor.num_components == number
     assert extractor.target == 'target'
     data = {'a': [1, 2, 3, 4], 'b': [5, 6, 7, 8],
-            'c': [9, 10, 11, 12], 'd': [13, 14, 15, 16]}
+            'c': [9, 10, 11, 12], 'd': [13, 14, 15, 16], 'target': [1, 2, 3, 4]}
     expected_result = pd.DataFrame(data={'PC1': [3, 1, -1, -3],
-                                         'PC2': [0.0, 0.0, 0.0, 0.0]})
+                                         'PC2': [0.0, 0.0, 0.0, 0.0],
+                                         'target': [1, 2, 3, 4]})
     data_frame = pd.DataFrame(data=data)
     result = extractor.extract(data_frame)
     assert isinstance(result, pd.DataFrame)

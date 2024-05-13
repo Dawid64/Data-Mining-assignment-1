@@ -6,7 +6,7 @@ Classes:
 - PCAExtractor: Performs PCA dimensionality reduction on a dataset.
 - LDAExtractor: Performs LDA dimensionality reduction on a dataset.
 """
-
+import numpy as np
 import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
@@ -69,12 +69,27 @@ class PCAExtractor(Extractor):
         ### Returns:
             pd.DataFrame: The transformed dataset after PCA dimensionality reduction.
         """
-        pca = PCA(n_components=self.num_components)
-        X_pca = pca.fit_transform(dataset)
+        self.pca = PCA(n_components=self.num_components)
+        X_pca = self.pca.fit_transform(dataset.drop(self.target, axis=1))
         frame = pd.DataFrame(data=X_pca, columns=[
                              f'PC{i}' for i in range(1, self.num_components + 1)])
         if self.target in dataset.columns:
             frame[self.target] = dataset[self.target].astype('float64')
+        return frame
+
+    def apply(self, dataset: pd.DataFrame) -> pd.DataFrame:
+        """
+        Applies PCA dimensionality reduction on the input dataset and returns the transformed dataset.
+
+        ### Args:
+            dataset (pd.DataFrame): The input dataset to perform PCA on.
+
+        ### Returns:
+            pd.DataFrame: The transformed dataset after PCA dimensionality reduction.
+        """
+        X_pca = self.pca.transform(dataset)
+        frame = pd.DataFrame(data=X_pca, columns=[
+            f'PC{i}' for i in range(1, self.num_components + 1)])
         return frame
 
 
