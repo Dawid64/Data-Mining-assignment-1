@@ -21,6 +21,9 @@ class Selector:
 
     """
 
+    def __init__(self) -> None:
+        self.removed_columns = set()
+
     def select(self, dataset: pd.DataFrame) -> pd.DataFrame:
         """
         Perform feature selection on the given dataset.
@@ -34,13 +37,27 @@ class Selector:
         """
         return dataset
 
+    def apply(self, dataset: pd.DataFrame) -> pd.DataFrame:
+        """
+        Apply the feature selection on the given dataset.
+
+        ### Args:
+            dataset (pd.DataFrame): The input dataset.
+
+        ### Returns:
+            pd.DataFrame: The dataset after feature selection.
+
+        """
+
+        return dataset.drop(columns=list(self.removed_columns))
+
 
 class VARSelector(Selector):
     """
     VarSelector is a class for feature selection based on variance.
 
     ### Parameters:
-        var_treshold : float, default=0.0017: 
+        var_treshold : float, default=0.0017:
             The threshold value for variance. Features with variances below this threshold will be dropped. Default is 0.0017.
     ### Methods:
         select(dataset: pd.DataFrame) -> pd.DataFrame:
@@ -50,6 +67,7 @@ class VARSelector(Selector):
 
     def __init__(self, var_treshold: float = 0.0017) -> None:
         self.var_treshold = var_treshold
+        self.removed_columns = set()
 
     def select(self, dataset: pd.DataFrame) -> pd.DataFrame:
         """
@@ -64,6 +82,8 @@ class VARSelector(Selector):
         """
         new_dataset = self._drop_unique(dataset)
         new_dataset = self._drop_low_var(new_dataset, self.var_treshold)
+        self.removed_columns = set(dataset.columns).difference(
+            set(new_dataset.columns))
         return new_dataset
 
     def _drop_unique(self, dataset: pd.DataFrame) -> pd.DataFrame:

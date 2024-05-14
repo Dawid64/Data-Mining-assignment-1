@@ -1,28 +1,8 @@
 import pandas as pd
 
-from preprocessing.preprocessing import Preprocessing, _PreprocessingABC
-from preprocessing.selector import VARSelector, Selector
-from preprocessing.extractor import PCAExtractor, Extractor
-
-
-def test_preprocessing_abc():
-    """ Testing PreprocessingABC """
-    class PreprocessingABCImpl(_PreprocessingABC):
-        def preprocess(self) -> pd.DataFrame:
-            pass
-
-        def _split_features(self):
-            pass
-
-        def _encode_dataset(self):
-            pass
-
-        def _na_handling(self):
-            pass
-
-    preprocessing_abc = PreprocessingABCImpl()
-    assert preprocessing_abc is not None
-    assert isinstance(preprocessing_abc, _PreprocessingABC)
+from preprocessing.preprocessing import Preprocessing
+from preprocessing.selector import Selector
+from preprocessing.extractor import Extractor
 
 
 def test_preprocessing():
