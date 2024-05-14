@@ -1,35 +1,14 @@
 """
 Module with main preprocessing class.
 """
-from abc import ABC, abstractmethod
-
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 from .selector import Selector
 from .extractor import Extractor
-from numpy import float64
 
 
-class _PreprocessingABC(ABC):
-    @abstractmethod
-    def preprocess(self) -> pd.DataFrame:
-        pass
-
-    @abstractmethod
-    def _split_features(self):
-        pass
-
-    @abstractmethod
-    def _encode_dataset(self):
-        pass
-
-    @abstractmethod
-    def _na_handling(self):
-        pass
-
-
-class Preprocessing(_PreprocessingABC):
+class Preprocessing:
     """
     A class for performing data preprocessing tasks.
 
