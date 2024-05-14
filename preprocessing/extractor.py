@@ -40,6 +40,19 @@ class Extractor:
         """
         return dataset
 
+    def apply(self, dataset: pd.DataFrame) -> pd.DataFrame:
+        """
+        Apply the feature extraction on the given dataset.
+
+        ### Args:
+            dataset (pd.DataFrame): The input dataset.
+
+        ### Returns:
+            pd.DataFrame: The dataset after feature extraction.
+
+        """
+        return dataset
+
 
 class PCAExtractor(Extractor):
     """
