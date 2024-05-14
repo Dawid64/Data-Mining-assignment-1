@@ -83,7 +83,8 @@ class PCAExtractor(Extractor):
             pd.DataFrame: The transformed dataset after PCA dimensionality reduction.
         """
         self.pca = PCA(n_components=self.num_components)
-        X_pca = self.pca.fit_transform(dataset.drop(self.target, axis=1))
+        X_pca = self.pca.fit_transform(dataset.drop(
+            columns=[self.target]))
         frame = pd.DataFrame(data=X_pca, columns=[
                              f'PC{i}' for i in range(1, self.num_components + 1)])
         if self.target in dataset.columns:
