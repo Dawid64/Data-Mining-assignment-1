@@ -57,7 +57,7 @@ class Preprocessing:
         self._na_handling()
         self._split_features()
         self._select(inplace=True)
-        self._scale(inplace=True)
+        # self._scale(inplace=True)
         self._encode_dataset()
         self._extract(inplace=True)
 
@@ -77,15 +77,27 @@ class Preprocessing:
 
     def _select(self, inplace: bool = False) -> pd.DataFrame:
         if inplace:
-            self.dataset = self.selector.select(self.dataset)
-            return self.dataset
+            dataset = self.selector.select(self.dataset)
+            return dataset
         return self.selector.select(self.dataset)
 
     def _extract(self, inplace: bool = False) -> pd.DataFrame:
         if inplace:
-            self.dataset = self.extractor.extract(self.dataset)
-            return self.dataset
+            dataset = self.extractor.extract(self.dataset)
+            return dataset
         return self.extractor.extract(self.dataset)
+
+    def _apply_selection(self, inplace: bool = False) -> pd.DataFrame:
+        if inplace:
+            dataset = self.selector.apply(self.dataset)
+            return dataset
+        return self.selector.apply(self.dataset)
+
+    def _apply_extraction(self, inplace: bool = False) -> pd.DataFrame:
+        if inplace:
+            dataset = self.extractor.apply(self.dataset)
+            return dataset
+        return self.extractor.apply(self.dataset)
 
     def _load_dataset(self, path: str) -> pd.DataFrame:
         return pd.read_csv(path)
@@ -103,15 +115,30 @@ class Preprocessing:
                     new_dataset, columns=[column], dtype='bool')
             else:
                 new_dataset.drop(column, axis=1, inplace=True)
-        target = new_dataset.pop(self.target)
-        new_dataset[self.target] = target
+        if self.target in new_dataset.columns:
+            target = new_dataset.pop(self.target)
+            self.encoded_columns = new_dataset.columns
+            new_dataset[self.target] = target
         self.dataset = new_dataset
 
+    def _apply_encode_dataset(self):
+        self._encode_dataset()
+        for column in self.dataset.columns:
+            if column not in self.encoded_columns:
+                self.dataset.drop(column, axis=1, inplace=True)
+        for column in self.encoded_columns:
+            if column not in self.dataset.columns:
+                self.dataset[column] = False
+        self.dataset = self.dataset.reindex(columns=self.encoded_columns)
+
     def _na_handling(self):
+        self.dataset.dropna(inplace=True, axis=0)
+        return
         cat = self.dataset.iloc[:, :-1].select_dtypes(include=['category',
                                                                'object', 'bool'])
         numbers = self.dataset.iloc[:, :-1].select_dtypes(include=['number'])
         numbers.fillna(0, inplace=True)
+
         modes = cat.mode().iloc[0]
         pd.set_option('future.no_silent_downcasting', True)
         cat.fillna({col: modes[col] for col in cat.columns}, inplace=True)
@@ -121,6 +148,33 @@ class Preprocessing:
 
     def _split_features(self):
         pass
+
+    def _adjust_features(self):
+        pass
+
+    def _addjust_features(self):
+        pass
+
+    def apply_preprocessing(self, dataset):
+        """
+        Apply the preprocessing pipeline to a test dataset.
+
+        ### Parameters:
+        - dataset (pd.DataFrame):
+            The test dataset to be preprocessed.
+
+        ### Returns:
+            pd.DataFrame: The preprocessed dataset.
+        """
+        self.dataset = dataset
+        self._na_handling()
+        self._split_features()
+        self._addjust_features()
+        self._apply_selection(inplace=True)
+        # self._scale(inplace=True)
+        self._apply_encode_dataset()
+        self._apply_extraction(inplace=True)
+        return self.dataset
 
 
 class SpaceShipPreprocessing(Preprocessing):
